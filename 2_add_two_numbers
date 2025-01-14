@@ -11,30 +11,29 @@
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        int carry = 0;
-        int sum = 0;
-        ListNode *result = new ListNode();
-        ListNode *temp = result;
-        while(l1 || l2 || carry){
-            int sum = carry;
-            if(l1){
-                sum += l1->val;
-                l1 = l1->next;
+        ListNode *l3 = new ListNode();
+        ListNode *ptr1 = l1, *ptr2 = l2;
+        ListNode *ptr3 = l3;
+        int tmp = 0;
+        while(true){
+            int n1 = (ptr1 == nullptr) ? 0 : ptr1->val;
+            int n2 = (ptr2 == nullptr) ? 0 : ptr2->val;
+            if(ptr1 == nullptr && ptr2 == nullptr && tmp == 0){
+                break;
             }
-            if(l2){
-                sum += l2->val;
-                l2 = l2->next;
+            ptr3->val = n1 + n2 + tmp;
+            tmp = 0;
+            if(ptr3->val >= 10){
+                ptr3->val = ptr3->val % 10;
+                tmp = 1;
             }
-            carry = sum/10;
-            sum = sum%10;
-            temp->val = sum;
-            if(l1 || l2 || carry){
-                ListNode *temp_next = new ListNode();
-                temp->next = temp_next;
-                temp = temp->next;
+            ptr1 = (ptr1 == nullptr) ? ptr1 : ptr1->next;
+            ptr2 = (ptr2 == nullptr) ? ptr2 : ptr2->next;
+            if(ptr1 != nullptr || ptr2 != nullptr || tmp != 0){
+                ptr3->next = new ListNode();
+                ptr3 = ptr3->next;
             }
-            else return result;
         }
-        return result;
+        return l3;
     }
 };
