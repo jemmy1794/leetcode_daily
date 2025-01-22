@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int reverse(int x) {
+        int result = 0;
+        int neg = 1;
+        if(x == INT_MIN){
+            return 0;
+        }
+        if( x < 0){
+            x *= -1;
+            neg *= -1;
+        }
+        while(true){
+            int num = x % 10;
+            x = x / 10;
+            if( num == 0 && x == 0){
+                break;
+            }
+            //std::cout << result << std::endl;
+            if(result > INT_MAX / 10){
+                return 0;
+            }
+            result = result * 10 + num;
+        }
+        return result * neg;
+    }
+};
